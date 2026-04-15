@@ -26,6 +26,8 @@ const sharedOpts = {
   singleLine: true,
 };
 
+const fileLogLevel = (process.env.PAPERCLIP_FILE_LOG_LEVEL?.trim() || "info") as pino.Level;
+
 export const logger = pino({
   level: "debug",
   redact: ["req.headers.authorization"],
@@ -39,7 +41,7 @@ export const logger = pino({
     {
       target: "pino-pretty",
       options: { ...sharedOpts, colorize: false, destination: logFile, mkdir: true },
-      level: "debug",
+      level: fileLogLevel,
     },
   ],
 }));
